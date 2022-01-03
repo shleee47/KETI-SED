@@ -1,0 +1,92 @@
+use_tb_logger: true
+
+#### datasets
+datasets:
+  #type: foa
+  path: ./dataset/train/
+  test: ./dataset/test/ 
+  demo: ./dataset/test/ 
+  
+dataloader:
+  train:
+    batch_size: 64
+    shuffle: true
+    # pin_memeory: true
+    num_workers: 40
+
+  valid:
+    batch_size: 64
+    shuffle: true
+    # pin_memeory: true
+    num_workers: 40
+
+  test:
+    batch_size: 1
+    shuffle: false
+    # pin_memeory: true
+    num_workers: 40
+
+#### network structures
+MYNET:
+  embed_size: 8
+  sequence_size: 16 # Temporal duration of input clips
+  encoder: resnet50
+  n_classes: 2
+  input_size: 224
+  pretrained: true
+  num_layers: 1
+  bidirectional: false
+
+#### training settings: learning rate scheme, loss
+trainer:
+  epochs: 10000
+  device: 1
+  save_path: /home/nas/user/sanghoon/code/SED/model/
+  #ckpt_path: /home/sanghoon/SED/model/Speech12207/ckpt/4_93.2750.pt
+  comment: no comment
+
+tester:
+  ckpt_path: /home/sanghoon/SED/model/Boar_youtube_added/ckpt/98_97.0276.pt
+  device: 1
+
+device: 1
+
+demo:
+  #boar: /home/sanghoon/SED/model/Pig_Not-Pig_2000/ckpt/79_99.5690.pt 
+  #boar: /home/sanghoon/SED/model/Pig_Not-Pig_2000/ckpt/51_99.3534.pt
+  boar: /home/sanghoon/SED/model/Boar_youtube_added/ckpt/98_97.0276.pt
+  #explosion: /home/sanghoon/SED/model/Explosion_Not-Explosion2000/ckpt/113_97.4304.pt
+  explosion: /home/sanghoon/SED/model/Explosion_cry_scream_added/ckpt/73_97.7674.pt
+  #speech: /home/sanghoon/KETI_DEMO/model/4_93.2750.pt
+  speech: /home/sanghoon/SED/model/Speech12207_lrdecay_cry_scream_added/ckpt/4_94.1985.pt
+  #crying: /home/sanghoon/KETI_DEMO/model/22_99.7283.pt 
+  crying: /home/sanghoon/SED/model/Crying_screaming_newdegree_added/ckpt/63_97.9167.pt
+  #screaming: /home/sanghoon/KETI_DEMO/model/14_99.1176.pt 
+  screaming: /home/sanghoon/SED/model/Screaming_cry_newdegree_added/ckpt/114_97.6798.pt
+  device: 1
+
+criterion:
+  #name: regression
+  #name: BCEWithLogits
+  name: BCE
+
+#### Optimizer settings
+# optimizer:
+#   name: Adam   ### Adam, RMSprop, SGD
+#   lr: !!float 1e-3
+#   weight_decay: 0
+#   eps: !!float 1e-3
+optimizer:
+  name: Adam   ## Adam, RMSprop, SGD
+  lr: !!float 0.0001
+  # betas: (0.9, 0.999)
+  eps: !!float 1e-5
+  weight_decay: !!float 1e-3
+
+
+#### scheduler settings
+scheduler:
+  name: plateau
+  min_lr: !!float 1e-8
+  patience: 10
+  factor: 0.5
