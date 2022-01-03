@@ -16,7 +16,7 @@ $ git config --global user.email "EMAIL@gmail.com"
 ### 1. Get the code on the server.
 #### 서버에 코드를 받으세요.  
 ```
-$ git clone https://github.com/shleee47/RaspberryPi-boar-detection.git
+$ git clone https://github.com/shleee47/KETI-SED.git
 ```     
 ### 2. Create the environment.   
 #### 환경을 만들어주세요.   
